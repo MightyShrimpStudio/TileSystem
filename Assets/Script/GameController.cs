@@ -18,8 +18,7 @@ namespace Script
         
         private BoardController _boardController;
         private GameState _gameState;
-        private CharacterController _currentCharacter;
-        private CharacterOrder _characterOrder = new CharacterOrder();
+        private readonly CharacterOrder _characterOrder = new CharacterOrder();
 
         private void Start()
         {
