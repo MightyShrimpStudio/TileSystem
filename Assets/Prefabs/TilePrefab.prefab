@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4177251129735576663}
   - component: {fileID: 1609769597475209669}
-  - component: {fileID: 9124306915984460043}
+  - component: {fileID: 7831041238963230877}
   - component: {fileID: 4207069584299807997}
   - component: {fileID: 2901371510401654215}
+  - component: {fileID: 6815729750425702516}
   m_Layer: 0
   m_Name: TilePrefab
   m_TagString: Untagged
@@ -47,7 +48,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9124306915984460043
+--- !u!114 &7831041238963230877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,9 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f57e13cc8821ee4cbcd09b23a4c9494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 1, y: 1, z: 1}
   neighbours: []
-  currentCharacterController: {fileID: 0}
+  currentCharacter: {fileID: 0}
   currentEntityController: {fileID: 0}
 --- !u!33 &4207069584299807997
 MeshFilter:
@@ -112,3 +112,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6815729750425702516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8159211238737262274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97944845b17048d29a66db97c03f52e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 1, y: 1, z: 1}

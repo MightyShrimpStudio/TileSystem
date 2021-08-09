@@ -19,6 +19,13 @@ namespace Script
 
         private void Start()
         {
+            SetUpGame();
+            //GameLoop();
+        }
+
+        private void SetUpGame()
+        {
+            _boardController = Instantiate(boardControllerPrefab,transform.position,Quaternion.identity);
             _gameState = GameState.PRETurnPhase;
         }
 

@@ -19,19 +19,19 @@ namespace Script.GameBoard
             Populate();
         }
 
-        public void Populate()
+        private void Populate()
         {
             for (int i = 0; i < 4; i++)
             {
                 _tileMatrix.Add(new List<TileController>());
                 for (int j = 0; j < 4; j++)
                 {
-
+                    TileController tile = Instantiate(tilePrefab, Vector3.zero, Quaternion.identity);
                     Vector3 position = new Vector3(
-                        i*tilePrefab.MyTileRender.size.x + i*offset,
+                        i*tile.MyTileRender.size.x + i*offset,
                         transform.position.y,
-                        j*tilePrefab.MyTileRender.size.z + j*offset);
-                    TileController tile = Instantiate(tilePrefab, position, Quaternion.identity);
+                        j*tile.MyTileRender.size.z + j*offset);
+                    tile.transform.position = position;
                     _tileMatrix[i].Add(tile);
                     tile.name = "Tile " + i + " " + j;
                 }
