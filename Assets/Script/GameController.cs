@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Script.GameBoard;
-using UnityEditor.Experimental.GraphView;
+using Script.Systems;
 using UnityEngine;
-using UnityEngine.Serialization;
+using CharacterController = Script.Character.CharacterController;
 
 namespace Script
 {
@@ -11,13 +11,15 @@ namespace Script
     {
 
         public BoardController boardControllerPrefab;
-        public List<Character.CharacterController> characters;
+        public List<CharacterController> characters;
         
         public event StartTurnDelegate StartTurn;
         public event EndTurnDelegate EndTurn;
         
         private BoardController _boardController;
         private GameState _gameState;
+        private CharacterController _currentCharacter;
+        private CharacterOrder _characterOrder = new CharacterOrder();
 
         private void Start()
         {
@@ -28,6 +30,8 @@ namespace Script
         private void SetUpGame()
         {
             _boardController = Instantiate(boardControllerPrefab,transform.position,Quaternion.identity);
+            _characterOrder.InGameCharacters = characters;
+            _characterOrder.CalculateOrder();
             _gameState = GameState.PRETurnPhase;
         }
 
@@ -38,6 +42,7 @@ namespace Script
                 switch (_gameState)
                 {
                     case GameState.PRETurnPhase:
+                        _characterOrder.NextCharacter();
                         _gameState = GameState.StartTurnPhase;
                         break;
                     case GameState.StartTurnPhase:
@@ -67,18 +72,6 @@ namespace Script
         private void OnEndTurn()
         {
             EndTurn?.Invoke();
-        }
-
-        private void CalculateOrder()
-        {
-            characters.Sort(CompareCharactersBySpeed);
-        }
-
-        private static int CompareCharactersBySpeed(Character.CharacterController chrX, Character.CharacterController chrY)
-        {
-            if (chrX == null)
-                return chrY == null ? 0 : -1;
-            return chrY == null ? 1 : chrX.characterStats.speed.CompareTo(chrY.characterStats.speed);
         }
     }
 
