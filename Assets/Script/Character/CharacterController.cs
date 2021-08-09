@@ -1,4 +1,5 @@
 ﻿using Script.GameBoard;
+using Script.GameBoard.Tile;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,7 +10,7 @@ namespace Script.Character
     public class CharacterController : MonoBehaviour
     {
 
-        [FormerlySerializedAs("currentTileChontroller")] [FormerlySerializedAs("currentTile")] public TileController currentTileController;
+        public TileController currentTile;
 
         private CharacterRenderer _characterRenderer;
         
@@ -23,14 +24,10 @@ namespace Script.Character
             return true;
         }
         
-        public void Move(TileController to)
+        public void Move(TileController destinationTile)
         {
-            if (to.IsFreeToMoveIn(this))
-            {
-                currentTileController.MoveOut();
-                to.MoveIn(this);
-                currentTileController = to;
-            }
+            currentTile.RemoveCharacter();
+            destinationTile.AddCharacter(this);
         }
 
         public void DeSelect()

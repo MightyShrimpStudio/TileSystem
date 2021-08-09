@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Script.GameBoard.Tile;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -27,27 +28,15 @@ namespace Script.GameBoard
                 {
 
                     Vector3 position = new Vector3(
-                        i*tilePrefab.size.x + i*offset,
+                        i*tilePrefab.MyTileRender.size.x + i*offset,
                         transform.position.y,
-                        j*tilePrefab.size.z + j*offset);
+                        j*tilePrefab.MyTileRender.size.z + j*offset);
                     TileController tile = Instantiate(tilePrefab, position, Quaternion.identity);
                     _tileMatrix[i].Add(tile);
                     tile.name = "Tile " + i + " " + j;
-                    tile.OnSelect += DeSelectAllExcept;
                 }
             }
         }
 
-        private void DeSelectAllExcept(String exception)
-        {
-            foreach (var tileRows in _tileMatrix)
-            {
-                foreach (var tile in tileRows)
-                {
-                    if(tile.name != exception) tile.DeSelect();
-                }
-            }
-        }
-        
     }
 }
