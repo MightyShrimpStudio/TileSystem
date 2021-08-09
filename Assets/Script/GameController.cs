@@ -30,6 +30,7 @@ namespace Script
         private void SetUpGame()
         {
             _boardController = Instantiate(boardControllerPrefab,transform.position,Quaternion.identity);
+            _boardController.Populate();
             _characterOrder.InGameCharacters = characters;
             _characterOrder.CalculateOrder();
             _currentGameState = GameState.PRETurnPhase;
@@ -65,12 +66,7 @@ namespace Script
             }
         }
 
-        public void TriggerEndTurn()
-        {
-            _currentGameState = GameState.EndTurnPhase;
-        }
-
-        private void NextPhase()
+        public void NextPhase()
         {
             switch (_currentGameState)
             {

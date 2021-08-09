@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Script.GameBoard.Tile;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Script.GameBoard
 {
@@ -14,12 +12,7 @@ namespace Script.GameBoard
         
         private List<List<TileController>> _tileMatrix = new List<List<TileController>>();
 
-        private void Start()
-        {
-            Populate();
-        }
-
-        private void Populate()
+        public void Populate()
         {
             for (int i = 0; i < 4; i++)
             {
