@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Script.GameBoard;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -10,7 +11,8 @@ namespace Script
     {
 
         public BoardController boardControllerPrefab;
-
+        public List<Character.CharacterController> characters;
+        
         public event StartTurnDelegate StartTurn;
         public event EndTurnDelegate EndTurn;
         
@@ -65,6 +67,18 @@ namespace Script
         private void OnEndTurn()
         {
             EndTurn?.Invoke();
+        }
+
+        private void CalculateOrder()
+        {
+            characters.Sort(CompareCharactersBySpeed);
+        }
+
+        private static int CompareCharactersBySpeed(Character.CharacterController chrX, Character.CharacterController chrY)
+        {
+            if (chrX == null)
+                return chrY == null ? 0 : -1;
+            return chrY == null ? 1 : chrX.characterStats.speed.CompareTo(chrY.characterStats.speed);
         }
     }
 

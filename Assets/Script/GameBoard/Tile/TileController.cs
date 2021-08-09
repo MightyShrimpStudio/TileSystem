@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
-using CharacterController = Script.Character.CharacterController;
 
 namespace Script.GameBoard.Tile
 {
@@ -10,7 +9,7 @@ namespace Script.GameBoard.Tile
     public class TileController : MonoBehaviour
     {
         public List<TileController> neighbours = new List<TileController>();
-        public Character.CharacterController currentCharacter;
+        [FormerlySerializedAs("currentCharacter")] public Character.CharacterController currentCharacterController;
         public Entity.EntityController currentEntityController;
         private TileRenderer _tileRenderer;
 
@@ -23,12 +22,12 @@ namespace Script.GameBoard.Tile
 
         public void RemoveCharacter()
         {
-            currentCharacter = null;
+            currentCharacterController = null;
         }
 
-        public void AddCharacter(CharacterController character)
+        public void AddCharacter(Character.CharacterController characterController)
         {
-            currentCharacter = character;
+            currentCharacterController = characterController;
         }
     }
 }

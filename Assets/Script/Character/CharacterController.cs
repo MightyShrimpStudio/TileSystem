@@ -1,16 +1,18 @@
-﻿using Script.GameBoard;
+﻿using System;
+using Script.GameBoard;
 using Script.GameBoard.Tile;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Script.Character
 {
-    [RequireComponent(typeof(CharacterRenderer), typeof(Collider))]
+    [RequireComponent(typeof(CharacterRenderer), typeof(CharacterStats))]
 
     public class CharacterController : MonoBehaviour
     {
-
-        public TileController currentTile;
+        public CharacterStats characterStats;
+        
+        [field: NonSerialized] public TileController CurrentTile { get; set; }
 
         private CharacterRenderer _characterRenderer;
         
@@ -19,20 +21,11 @@ namespace Script.Character
             _characterRenderer = GetComponent<CharacterRenderer>();
         }
         
-        public bool OnHit(CharacterController characterController)
-        {
-            return true;
-        }
-        
         public void Move(TileController destinationTile)
         {
-            currentTile.RemoveCharacter();
+            CurrentTile.RemoveCharacter();
             destinationTile.AddCharacter(this);
-        }
-
-        public void DeSelect()
-        {
-            throw new System.NotImplementedException();
+            CurrentTile = destinationTile;
         }
     }
 }
