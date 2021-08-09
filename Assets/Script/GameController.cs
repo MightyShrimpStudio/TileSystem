@@ -17,13 +17,14 @@ namespace Script
         public event EndTurnDelegate EndTurn;
         
         private BoardController _boardController;
-        private GameState _gameState;
+        private GameState _currentGameState;
+        private GameState _prevGameState;
         private readonly CharacterOrder _characterOrder = new CharacterOrder();
+        private bool _newPhase;
 
         private void Start()
         {
             SetUpGame();
-            //GameLoop();
         }
 
         private void SetUpGame()
@@ -31,29 +32,30 @@ namespace Script
             _boardController = Instantiate(boardControllerPrefab,transform.position,Quaternion.identity);
             _characterOrder.InGameCharacters = characters;
             _characterOrder.CalculateOrder();
-            _gameState = GameState.PRETurnPhase;
+            _currentGameState = GameState.PRETurnPhase;
+            _newPhase = true;
         }
 
-        private void GameLoop()
+        private void Update()
         {
-            while (_gameState != GameState.ExitGame)
+            if (_newPhase)
             {
-                switch (_gameState)
+                _newPhase = false;
+                switch (_currentGameState)
                 {
                     case GameState.PRETurnPhase:
                         _characterOrder.NextCharacter();
-                        _gameState = GameState.StartTurnPhase;
+                        NextPhase();
                         break;
                     case GameState.StartTurnPhase:
                         OnStartTurn();
-                        _gameState = GameState.ActionPhase;
+                        NextPhase();
                         break;
                     case GameState.ActionPhase:
-                        _gameState = GameState.EndTurnPhase;
                         break;
                     case GameState.EndTurnPhase:
                         OnEndTurn();
-                        _gameState = GameState.PRETurnPhase;
+                        NextPhase();
                         break;
                     case GameState.ExitGame:
                         break;
@@ -63,6 +65,36 @@ namespace Script
             }
         }
 
+        public void TriggerEndTurn()
+        {
+            _currentGameState = GameState.EndTurnPhase;
+        }
+
+        private void NextPhase()
+        {
+            switch (_currentGameState)
+            {
+                case GameState.PRETurnPhase:
+                    _currentGameState = GameState.StartTurnPhase;
+                    break;
+                case GameState.StartTurnPhase:
+                    _currentGameState = GameState.ActionPhase;
+                    break;
+                case GameState.ActionPhase:
+                    _currentGameState = GameState.EndTurnPhase;
+                    break;
+                case GameState.EndTurnPhase:
+                    _currentGameState = GameState.PRETurnPhase;
+                    break;
+                case GameState.ExitGame:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            _newPhase = true;
+        }
+        
         private void OnStartTurn()
         {
             StartTurn?.Invoke();
