@@ -8,17 +8,16 @@ namespace Script.SubSystems
         public CreatureController CurrentCreature;
         public List<CreatureController> InGameCharacters;
 
-
-        public void Push(CreatureController creature)
+        public void AddCreature(CreatureController creatureController)
         {
-            InGameCharacters.Add(creature);
+            InGameCharacters.Add(creatureController);
+            CalculateOrder();
         }
-
-        public CreatureController Pop()
+        
+        public void RemoveCreature(CreatureController creatureController)
         {
-            var tmpChr = InGameCharacters[0];
-            InGameCharacters.Remove(tmpChr);
-            return tmpChr;
+            InGameCharacters.Remove(creatureController);
+            CalculateOrder();
         }
 
         public void CalculateOrder()
@@ -37,6 +36,18 @@ namespace Script.SubSystems
         {
             Push(CurrentCreature);
             CurrentCreature = Pop();
+        }
+        
+        private void Push(CreatureController creature)
+        {
+            InGameCharacters.Add(creature);
+        }
+
+        private CreatureController Pop()
+        {
+            var tmpChr = InGameCharacters[0];
+            InGameCharacters.Remove(tmpChr);
+            return tmpChr;
         }
     }
 }
