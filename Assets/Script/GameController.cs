@@ -8,21 +8,18 @@ using UnityEngine;
 
 namespace Script
 {
-    //[RequireComponent(typeof(Spawner), typeof(CharacterOrder))]
+    [RequireComponent(typeof(CharacterOrder))]
     public class GameController : MonoBehaviour
     {
         public BoardController boardControllerPrefab;
-        public CreatureController currentCharacter;
 
-        //private CharacterOrder _characterOrder;
-        //private Spawner _spawner;
+        private CharacterOrder _characterOrder;
         private BoardController _boardController;
         private GameStateMachine _gameStateMachine;
 
         private void Awake()
         {
-            //_spawner = GetComponent<Spawner>();
-            //_characterOrder = GetComponent<CharacterOrder>();
+            _characterOrder = GetComponent<CharacterOrder>();
             _gameStateMachine = new GameStateMachine();
         }
 
@@ -39,7 +36,7 @@ namespace Script
                 switch (_gameStateMachine.CurrentGameState)
                 {
                     case GameStateMachine.GameState.PRETurnPhase:
-                        //_characterOrder.NextCharacter();
+                        _characterOrder.NextCharacter();
                         _gameStateMachine.NextPhase();
                         break;
                     case GameStateMachine.GameState.StartTurnPhase:
@@ -67,8 +64,7 @@ namespace Script
         {
             _boardController = Instantiate(boardControllerPrefab, transform.position, Quaternion.identity);
             _boardController.Populate(OnSelection);
-            
-            //_spawner.SpawnCreature(characters[0],_boardController.get);
+            _characterOrder.StartCircle();
         }
         
         private void OnStartTurn()
@@ -84,7 +80,8 @@ namespace Script
         public void OnSelection(TileController tile)
         {
             Debug.Log(tile.name);
-            currentCharacter.Move(tile);
+            _characterOrder.CurrentCreature.Move(tile);
+            _gameStateMachine.NextPhase();
         }
     }
 

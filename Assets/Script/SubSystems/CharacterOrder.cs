@@ -8,19 +8,20 @@ namespace Script.SubSystems
 {
     public class CharacterOrder : MonoBehaviour
     {
-        public CreatureController CurrentCreature;
-
-        [NotNull]
-        public List<CreatureController> InGameCharacters
+        public CreatureController CurrentCreature
         {
-            get => InGameCharacters;
-            set
-            {
-                InGameCharacters = value ?? throw new ArgumentNullException(nameof(value));
-                CalculateOrder();
-            }
+            get;
+            private set;
         }
 
+        public List<CreatureController> InGameCharacters;
+
+        public void StartCircle()
+        {
+            CurrentCreature = Pop();
+            CalculateOrder();
+        }
+        
         public void AddCreature(CreatureController creatureController)
         {
             InGameCharacters.Add(creatureController);

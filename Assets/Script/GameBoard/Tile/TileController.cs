@@ -40,14 +40,6 @@ namespace Script.GameBoard.Tile
                 OnSelect?.Invoke(this);
             }
         }
-
-        /*private void OnMouseExit()
-        {
-        }
-
-        private void OnMouseOver()
-        {
-        }*/
     }
 
     public delegate void IsSelectedDelegate(TileController selectedTile);
