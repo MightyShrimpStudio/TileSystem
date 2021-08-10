@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Script.Character
 {
     [RequireComponent(typeof(Animator))]
-    public class CharacterAnimator : MonoBehaviour
+    public class CreatureAnimator : MonoBehaviour
     {
         
         private Animator _animator;

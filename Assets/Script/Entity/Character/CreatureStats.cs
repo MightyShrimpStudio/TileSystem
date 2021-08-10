@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace Script.Character
 {
-    public class CharacterStats : ScriptableObject
+    public class CreatureStats : ScriptableObject
     {
         public string chrName;
         public int speed;

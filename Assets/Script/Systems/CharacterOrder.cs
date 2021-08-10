@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
 using Script.Character;
+using Script.Entity.Character;
 
 namespace Script.Systems
 {
     public class CharacterOrder
     {
-        public List<CharacterController> InGameCharacters;
-        public CharacterController CurrentCharacter;
+        public List<CreatureController> InGameCharacters;
+        public CreatureController CurrentCreature;
 
 
-        public void Push(CharacterController character)
+        public void Push(CreatureController creature)
         {
-            InGameCharacters.Add(character);
+            InGameCharacters.Add(creature);
         }
 
-        public CharacterController Pop()
+        public CreatureController Pop()
         {
-            CharacterController tmpChr = InGameCharacters[0];
+            CreatureController tmpChr = InGameCharacters[0];
             InGameCharacters.Remove(tmpChr);
             return tmpChr;
         }
@@ -26,17 +27,17 @@ namespace Script.Systems
             InGameCharacters.Sort(CompareCharactersBySpeed);
         }
 
-        private static int CompareCharactersBySpeed(CharacterController chrX, CharacterController chrY)
+        private static int CompareCharactersBySpeed(CreatureController chrX, CreatureController chrY)
         {
             if (chrX == null)
                 return chrY == null ? 0 : -1;
-            return chrY == null ? 1 : chrX.characterStats.speed.CompareTo(chrY.characterStats.speed);
+            return chrY == null ? 1 : chrX.creatureStats.speed.CompareTo(chrY.creatureStats.speed);
         }
 
         public void NextCharacter()
         {
-            Push(CurrentCharacter);
-            CurrentCharacter = Pop();
+            Push(CurrentCreature);
+            CurrentCreature = Pop();
         }
     }
 }

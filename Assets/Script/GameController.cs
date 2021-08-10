@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Script.Character;
+using Script.Entity.Character;
 using Script.GameBoard;
 using Script.Systems;
 using UnityEngine;
-using CharacterController = Script.Character.CharacterController;
 
 namespace Script
 {
@@ -11,7 +12,7 @@ namespace Script
     {
 
         public BoardController boardControllerPrefab;
-        public List<CharacterController> characters;
+        public List<CreatureController> characters;
         
         public event StartTurnDelegate StartTurn;
         public event EndTurnDelegate EndTurn;
