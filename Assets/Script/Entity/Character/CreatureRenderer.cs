@@ -1,10 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Script.Character
 {
     [RequireComponent(typeof(CreatureAnimator))]
-
     public class CreatureRenderer : MonoBehaviour
     {
         private CreatureAnimator _creatureAnimator;

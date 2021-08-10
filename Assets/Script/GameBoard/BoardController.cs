@@ -6,24 +6,23 @@ namespace Script.GameBoard
 {
     public class BoardController : MonoBehaviour
     {
-
         public TileController tilePrefab;
         public float offset = 0.1f;
-        
-        private List<List<TileController>> _tileMatrix = new List<List<TileController>>();
+
+        private readonly List<List<TileController>> _tileMatrix = new();
 
         public void Populate()
         {
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
                 _tileMatrix.Add(new List<TileController>());
-                for (int j = 0; j < 4; j++)
+                for (var j = 0; j < 4; j++)
                 {
-                    TileController tile = Instantiate(tilePrefab, Vector3.zero, Quaternion.identity);
-                    Vector3 position = new Vector3(
-                        i*tile.MyTileRender.size.x + i*offset,
+                    var tile = Instantiate(tilePrefab, Vector3.zero, Quaternion.identity);
+                    var position = new Vector3(
+                        i * tile.MyTileRender.size.x + i * offset,
                         transform.position.y,
-                        j*tile.MyTileRender.size.z + j*offset);
+                        j * tile.MyTileRender.size.z + j * offset);
                     tile.transform.position = position;
                     _tileMatrix[i].Add(tile);
                     tile.name = "Tile " + i + " " + j;

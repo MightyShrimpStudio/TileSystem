@@ -5,8 +5,8 @@ namespace Script.SubSystems
 {
     public class CharacterOrder
     {
-        public List<CreatureController> InGameCharacters;
         public CreatureController CurrentCreature;
+        public List<CreatureController> InGameCharacters;
 
 
         public void Push(CreatureController creature)
@@ -16,7 +16,7 @@ namespace Script.SubSystems
 
         public CreatureController Pop()
         {
-            CreatureController tmpChr = InGameCharacters[0];
+            var tmpChr = InGameCharacters[0];
             InGameCharacters.Remove(tmpChr);
             return tmpChr;
         }

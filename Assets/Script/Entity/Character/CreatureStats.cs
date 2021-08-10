@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
 namespace Script.Character
 {
@@ -9,6 +7,5 @@ namespace Script.Character
         public string chrName;
         public int speed;
         public int team;
-
     }
 }
