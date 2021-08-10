@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Script.Character;
 using Script.Entity.Character;
 
-namespace Script.Systems
+namespace Script.SubSystems
 {
     public class CharacterOrder
     {
