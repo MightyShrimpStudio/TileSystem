@@ -5,14 +5,15 @@ using UnityEngine;
 
 namespace Script.Entity.Character
 {
-    [RequireComponent(typeof(CreatureRenderer), typeof(CreatureStats))]
+    [RequireComponent(typeof(CreatureRenderer))]
     public class CreatureController : MonoBehaviour, IEntity
     {
-        public CreatureStats creatureStats;
+        
 
         private CreatureRenderer _creatureRenderer;
+        public int speed = 0;
 
-        [field: NonSerialized] public TileController CurrentTile { get; set; }
+        public TileController CurrentTile { get; private set; }
 
         private void Awake()
         {
@@ -31,9 +32,10 @@ namespace Script.Entity.Character
 
         public void Move(TileController destinationTile)
         {
-            CurrentTile.RemoveCharacter();
+            if(CurrentTile != null)CurrentTile.RemoveCharacter();
             destinationTile.AddCharacter(this);
             CurrentTile = destinationTile;
+            transform.position = CurrentTile.transform.position;
         }
     }
 }

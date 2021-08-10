@@ -1,12 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using Script.Entity.Character;
+using UnityEngine;
 
 namespace Script.SubSystems
 {
-    public class CharacterOrder
+    public class CharacterOrder : MonoBehaviour
     {
         public CreatureController CurrentCreature;
-        public List<CreatureController> InGameCharacters;
+
+        [NotNull]
+        public List<CreatureController> InGameCharacters
+        {
+            get => InGameCharacters;
+            set
+            {
+                InGameCharacters = value ?? throw new ArgumentNullException(nameof(value));
+                CalculateOrder();
+            }
+        }
 
         public void AddCreature(CreatureController creatureController)
         {
@@ -29,7 +42,7 @@ namespace Script.SubSystems
         {
             if (chrX == null)
                 return chrY == null ? 0 : -1;
-            return chrY == null ? 1 : chrX.creatureStats.speed.CompareTo(chrY.creatureStats.speed);
+            return chrY == null ? 1 : chrX.speed.CompareTo(chrY.speed);
         }
 
         public void NextCharacter()

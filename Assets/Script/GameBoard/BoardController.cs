@@ -9,9 +9,9 @@ namespace Script.GameBoard
         public TileController tilePrefab;
         public float offset = 0.1f;
 
-        private readonly List<List<TileController>> _tileMatrix = new();
+        private readonly List<List<TileController>> _tileMatrix = new List<List<TileController>>();
 
-        public void Populate()
+        public void Populate(IsSelectedDelegate selectionMethod)
         {
             for (var i = 0; i < 4; i++)
             {
@@ -26,6 +26,7 @@ namespace Script.GameBoard
                     tile.transform.position = position;
                     _tileMatrix[i].Add(tile);
                     tile.name = "Tile " + i + " " + j;
+                    tile.OnSelect += selectionMethod;
                 }
             }
         }

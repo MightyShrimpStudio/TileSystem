@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1954690268616431140}
-  - component: {fileID: 8964344052281479432}
+  - component: {fileID: 605118179595721147}
   m_Layer: 0
   m_Name: GameControllerPrefab
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8964344052281479432
+--- !u!114 &605118179595721147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardControllerPrefab: {fileID: 6805405211282918751, guid: 03e0a84c911b3e5439a5addb7ae11ad5, type: 3}
+  currentCharacter: {fileID: 0}

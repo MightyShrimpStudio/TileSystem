@@ -4,7 +4,7 @@ namespace Script.Entity
 {
     public interface IEntity
     {
-        public bool IsApproachable();
-        public void Approaching(CreatureController approachingCreature);
+        bool IsApproachable();
+        void Approaching(CreatureController approachingCreature);
     }
 }
