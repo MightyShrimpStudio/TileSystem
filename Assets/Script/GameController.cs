@@ -79,7 +79,6 @@ namespace Script
 
         public void OnSelection(TileController tile)
         {
-            Debug.Log(tile.name);
             _characterOrder.CurrentCreature.Move(tile);
             _gameStateMachine.NextPhase();
         }

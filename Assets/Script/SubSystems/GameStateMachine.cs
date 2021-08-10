@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Script.SubSystems
 {
@@ -6,6 +7,7 @@ namespace Script.SubSystems
     {
         public enum GameState
         {
+            GameStart,
             PRETurnPhase,
             StartTurnPhase,
             ActionPhase,
@@ -15,17 +17,20 @@ namespace Script.SubSystems
 
         public GameStateMachine()
         {
-            CurrentGameState = GameState.PRETurnPhase;
+            CurrentGameState = GameState.GameStart;
             NewPhase = false;
         }
 
-        public GameState CurrentGameState { get; private set; }
+        public GameState CurrentGameState { get; private set; } = GameState.PRETurnPhase;
         public bool NewPhase { get; set; }
 
         public void NextPhase()
         {
             switch (CurrentGameState)
             {
+                case GameState.GameStart:
+                    CurrentGameState = GameState.PRETurnPhase;
+                    break;
                 case GameState.PRETurnPhase:
                     CurrentGameState = GameState.StartTurnPhase;
                     break;
@@ -44,6 +49,7 @@ namespace Script.SubSystems
                     throw new ArgumentOutOfRangeException();
             }
 
+            Debug.Log("Game state is " + CurrentGameState.ToString());
             NewPhase = true;
         }
     }
