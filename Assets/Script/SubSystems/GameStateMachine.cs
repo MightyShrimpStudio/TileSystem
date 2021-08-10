@@ -18,7 +18,8 @@ namespace Script.SubSystems
         public GameStateMachine()
         {
             CurrentGameState = GameState.GameStart;
-            NewPhase = false;
+            Debug.Log("Game state is " + CurrentGameState.ToString());
+            NewPhase = true;
         }
 
         public GameState CurrentGameState { get; private set; } = GameState.PRETurnPhase;

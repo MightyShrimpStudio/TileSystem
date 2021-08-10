@@ -16,16 +16,13 @@ namespace Script
         private CharacterOrder _characterOrder;
         private BoardController _boardController;
         private GameStateMachine _gameStateMachine;
+        private PathFinder _pathFinder;
 
         private void Awake()
         {
             _characterOrder = GetComponent<CharacterOrder>();
             _gameStateMachine = new GameStateMachine();
-        }
-
-        private void Start()
-        {
-            SetUpGame();
+            _pathFinder = new PathFinder();
         }
 
         private void Update()
@@ -35,6 +32,10 @@ namespace Script
                 _gameStateMachine.NewPhase = false;
                 switch (_gameStateMachine.CurrentGameState)
                 {
+                    case GameStateMachine.GameState.GameStart:
+                        SetUpGame();
+                        _gameStateMachine.NextPhase();
+                        break;
                     case GameStateMachine.GameState.PRETurnPhase:
                         _characterOrder.NextCharacter();
                         _gameStateMachine.NextPhase();
@@ -64,12 +65,15 @@ namespace Script
         {
             _boardController = Instantiate(boardControllerPrefab, transform.position, Quaternion.identity);
             _boardController.Populate(OnSelection);
-            _characterOrder.StartCircle();
+            _characterOrder.StartCircle(_boardController);
+            StartTurn += _pathFinder.Allow;
+            EndTurn += _pathFinder.Cleanup;
+            Debug.Log("Set up game done");
         }
         
         private void OnStartTurn()
         {
-            StartTurn?.Invoke();
+            StartTurn?.Invoke(_characterOrder.CurrentCreature);
         }
 
         private void OnEndTurn()
@@ -84,7 +88,7 @@ namespace Script
         }
     }
 
-    public delegate void StartTurnDelegate();
+    public delegate void StartTurnDelegate(CreatureController currentCharacter);
 
     public delegate void EndTurnDelegate();
 }

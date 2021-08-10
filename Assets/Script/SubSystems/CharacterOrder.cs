@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Script.Entity.Character;
+using Script.GameBoard;
 using UnityEngine;
 
 namespace Script.SubSystems
@@ -16,8 +17,10 @@ namespace Script.SubSystems
 
         public List<CreatureController> InGameCharacters;
 
-        public void StartCircle()
+        public void StartCircle(BoardController bc)
         {
+            InGameCharacters[0].Move(bc._tileMatrix[0][0]);
+            InGameCharacters[1].Move(bc._tileMatrix[1][1]);
             CurrentCreature = Pop();
             CalculateOrder();
         }
@@ -43,7 +46,7 @@ namespace Script.SubSystems
         {
             if (chrX == null)
                 return chrY == null ? 0 : -1;
-            return chrY == null ? 1 : chrX.speed.CompareTo(chrY.speed);
+            return chrY == null ? 1 : chrX.creatureStats.speed.CompareTo(chrY.creatureStats.speed);
         }
 
         public void NextCharacter()

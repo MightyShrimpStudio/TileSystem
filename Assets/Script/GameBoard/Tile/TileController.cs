@@ -40,6 +40,20 @@ namespace Script.GameBoard.Tile
                 OnSelect?.Invoke(this);
             }
         }
+
+        public HashSet<TileController> RecursiveNeighbourSearch(int move, HashSet<TileController> tiles)
+        {
+            if (move != 0)
+            {
+                foreach (var neighbour in neighbours)
+                {
+                    tiles = neighbour.RecursiveNeighbourSearch(move - 1, tiles);
+                }
+            }
+
+            tiles.Add(this);
+            return tiles;
+        }
     }
 
     public delegate void IsSelectedDelegate(TileController selectedTile);
