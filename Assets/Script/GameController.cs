@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Script.Character;
 using Script.Entity.Character;
 using Script.GameBoard;
 using Script.SubSystems;
@@ -10,56 +9,45 @@ namespace Script
 {
     public class GameController : MonoBehaviour
     {
-
         public BoardController boardControllerPrefab;
         public List<CreatureController> characters;
-        
-        public event StartTurnDelegate StartTurn;
-        public event EndTurnDelegate EndTurn;
-        
+        private readonly CharacterOrder _characterOrder = new();
+
         private BoardController _boardController;
-        private GameState _currentGameState;
-        private GameState _prevGameState;
-        private readonly CharacterOrder _characterOrder = new CharacterOrder();
-        private bool _newPhase;
+        private GameStateMachine _gameStateMachine;
+
+        private void Awake()
+        {
+            _gameStateMachine = new GameStateMachine();
+        }
 
         private void Start()
         {
             SetUpGame();
         }
 
-        private void SetUpGame()
-        {
-            _boardController = Instantiate(boardControllerPrefab,transform.position,Quaternion.identity);
-            _boardController.Populate();
-            _characterOrder.InGameCharacters = characters;
-            _characterOrder.CalculateOrder();
-            _currentGameState = GameState.PRETurnPhase;
-            _newPhase = true;
-        }
-
         private void Update()
         {
-            if (_newPhase)
+            if (_gameStateMachine.NewPhase)
             {
-                _newPhase = false;
-                switch (_currentGameState)
+                _gameStateMachine.NewPhase = false;
+                switch (_gameStateMachine.CurrentGameState)
                 {
-                    case GameState.PRETurnPhase:
+                    case GameStateMachine.GameState.PRETurnPhase:
                         _characterOrder.NextCharacter();
-                        NextPhase();
+                        _gameStateMachine.NextPhase();
                         break;
-                    case GameState.StartTurnPhase:
+                    case GameStateMachine.GameState.StartTurnPhase:
                         OnStartTurn();
-                        NextPhase();
+                        _gameStateMachine.NextPhase();
                         break;
-                    case GameState.ActionPhase:
+                    case GameStateMachine.GameState.ActionPhase:
                         break;
-                    case GameState.EndTurnPhase:
+                    case GameStateMachine.GameState.EndTurnPhase:
                         OnEndTurn();
-                        NextPhase();
+                        _gameStateMachine.NextPhase();
                         break;
-                    case GameState.ExitGame:
+                    case GameStateMachine.GameState.ExitGame:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -67,31 +55,18 @@ namespace Script
             }
         }
 
-        public void NextPhase()
-        {
-            switch (_currentGameState)
-            {
-                case GameState.PRETurnPhase:
-                    _currentGameState = GameState.StartTurnPhase;
-                    break;
-                case GameState.StartTurnPhase:
-                    _currentGameState = GameState.ActionPhase;
-                    break;
-                case GameState.ActionPhase:
-                    _currentGameState = GameState.EndTurnPhase;
-                    break;
-                case GameState.EndTurnPhase:
-                    _currentGameState = GameState.PRETurnPhase;
-                    break;
-                case GameState.ExitGame:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+        public event StartTurnDelegate StartTurn;
+        public event EndTurnDelegate EndTurn;
 
-            _newPhase = true;
+        private void SetUpGame()
+        {
+            _boardController = Instantiate(boardControllerPrefab, transform.position, Quaternion.identity);
+            _boardController.Populate();
+            _characterOrder.InGameCharacters = characters;
+            _characterOrder.CalculateOrder();
         }
-        
+
+
         private void OnStartTurn()
         {
             StartTurn?.Invoke();
@@ -104,11 +79,6 @@ namespace Script
     }
 
     public delegate void StartTurnDelegate();
-    public delegate void EndTurnDelegate();
 
-    public enum GameState
-    {
-        PRETurnPhase, StartTurnPhase, ActionPhase, EndTurnPhase,
-        ExitGame
-    }
+    public delegate void EndTurnDelegate();
 }
