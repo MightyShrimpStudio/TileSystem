@@ -23,16 +23,14 @@ namespace Script.Entity.Character
 
         public void SetDirection(Vector2 direction)
         {
-            if (direction.magnitude > 0.01f)
-            {
-                _lastDirection = DirectionToIndex(direction);
-                _animator.Play(DirectionArray[_lastDirection]);
-            }
+            if (!(direction.magnitude > 0.01f)) return;
+            _lastDirection = DirectionToIndex(direction);
+            _animator.Play(DirectionArray[_lastDirection]);
         }
 
-        private int DirectionToIndex(Vector2 direction)
+        private static int DirectionToIndex(Vector2 direction)
         {
-            var halfStep = Step / 2;
+            const float halfStep = Step / 2;
             var angle = Vector2.SignedAngle(Vector2.up, direction.normalized);
             angle += halfStep;
             if (angle < 0) angle += 360;
