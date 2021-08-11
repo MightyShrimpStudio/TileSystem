@@ -69,7 +69,8 @@ jobs:
 
     - name: Unity Build Action
       uses: yukiarrr/unity-build-action@v0.6.1
-
+      with:
+        unity-version: 2020.1.17f1
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
