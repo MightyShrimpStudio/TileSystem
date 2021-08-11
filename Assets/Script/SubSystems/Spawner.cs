@@ -9,7 +9,6 @@ namespace Script.SubSystems
     {
         public void SpawnCreatures(List<CreatureController> creatureList, List<TileController> tileList)
         {
-            
         }
 
         public void SpawnCreature(CreatureController creature, TileController tile)

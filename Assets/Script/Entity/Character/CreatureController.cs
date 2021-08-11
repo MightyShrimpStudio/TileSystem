@@ -7,11 +7,10 @@ namespace Script.Entity.Character
     [RequireComponent(typeof(CreatureRenderer))]
     public class CreatureController : MonoBehaviour
     {
-        
         public CreatureStats creatureStats;
-        public TileController CurrentTile { get; private set; }
 
         private CreatureRenderer _creatureRenderer;
+        public TileController CurrentTile { get; private set; }
 
         private void Awake()
         {
@@ -20,7 +19,7 @@ namespace Script.Entity.Character
 
         public void Move(TileController destinationTile)
         {
-            if(CurrentTile != null)CurrentTile.RemoveCharacter();
+            if (CurrentTile != null) CurrentTile.RemoveCharacter();
             destinationTile.AddCharacter(this);
             CurrentTile = destinationTile;
             transform.position = CurrentTile.transform.position;

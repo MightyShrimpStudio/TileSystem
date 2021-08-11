@@ -9,9 +9,9 @@ namespace Script.GameBoard
     {
         public TileController tilePrefab;
         public float offset = 0.1f;
-        public Vector2 size = new (4, 4);
+        public Vector2 size = new(4, 4);
 
-        public readonly List<List<TileController>> TileMatrix = new ();
+        public readonly List<List<TileController>> TileMatrix = new();
 
         public void Populate(IsSelectedDelegate selectionMethod)
         {
@@ -31,20 +31,19 @@ namespace Script.GameBoard
                     tile.OnSelect += selectionMethod;
                 }
             }
+
             CalculateNeighbours();
         }
 
         private void CalculateNeighbours()
         {
-            for (int i = 0; i < size.x; i++)
+            for (var i = 0; i < size.x; i++)
+            for (var j = 0; j < size.y; j++)
             {
-                for (int j = 0; j < size.y; j++)
-                {
-                    TileMatrix[i][j].neighbours.Add(TileMatrix[(int) ((i+1)%size.x)][(int) ((j)%size.y)]);
-                    TileMatrix[i][j].neighbours.Add(TileMatrix[(int) (Math.Abs(i-1)%size.x)][(int) ((j)%size.y)]);
-                    TileMatrix[i][j].neighbours.Add(TileMatrix[(int) ((i)%size.x)][(int) (Math.Abs(j-1)%size.y)]);
-                    TileMatrix[i][j].neighbours.Add(TileMatrix[(int) ((i)%size.x)][(int) ((j+1)%size.y)]);
-                }
+                TileMatrix[i][j].neighbours.Add(TileMatrix[(int) ((i + 1) % size.x)][(int) (j % size.y)]);
+                TileMatrix[i][j].neighbours.Add(TileMatrix[(int) (Math.Abs(i - 1) % size.x)][(int) (j % size.y)]);
+                TileMatrix[i][j].neighbours.Add(TileMatrix[(int) (i % size.x)][(int) (Math.Abs(j - 1) % size.y)]);
+                TileMatrix[i][j].neighbours.Add(TileMatrix[(int) (i % size.x)][(int) ((j + 1) % size.y)]);
             }
         }
     }

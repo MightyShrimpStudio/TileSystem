@@ -11,7 +11,7 @@ namespace Script.GameBoard.Tile
         {
             _collider = GetComponent<Collider>();
         }
-        
+
         /*private void OnMouseExit()
         {
         }

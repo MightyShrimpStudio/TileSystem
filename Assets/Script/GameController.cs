@@ -11,9 +11,9 @@ namespace Script
     public class GameController : MonoBehaviour
     {
         public BoardController boardControllerPrefab;
+        private BoardController _boardController;
 
         private CharacterOrder _characterOrder;
-        private BoardController _boardController;
         private GameStateMachine _gameStateMachine;
         private PathFinder _pathFinder;
 
@@ -67,7 +67,7 @@ namespace Script
             EndTurn += _pathFinder.Cleanup;
             Debug.Log("Set up game done");
         }
-        
+
         private void OnStartTurn()
         {
             StartTurn?.Invoke(_characterOrder.CurrentCreature);

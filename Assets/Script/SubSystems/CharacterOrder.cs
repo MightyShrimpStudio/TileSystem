@@ -7,13 +7,9 @@ namespace Script.SubSystems
 {
     public class CharacterOrder : MonoBehaviour
     {
-        public CreatureController CurrentCreature
-        {
-            get;
-            private set;
-        }
-
         public List<CreatureController> inGameCharacters;
+
+        public CreatureController CurrentCreature { get; private set; }
 
         public void StartCircle(BoardController bc)
         {
@@ -22,13 +18,13 @@ namespace Script.SubSystems
             CurrentCreature = Pop();
             CalculateOrder();
         }
-        
+
         public void AddCreature(CreatureController creatureController)
         {
             inGameCharacters.Add(creatureController);
             CalculateOrder();
         }
-        
+
         public void RemoveCreature(CreatureController creatureController)
         {
             inGameCharacters.Remove(creatureController);
@@ -37,7 +33,7 @@ namespace Script.SubSystems
 
         private void CalculateOrder()
         {
-            if(inGameCharacters.Count > 1)
+            if (inGameCharacters.Count > 1)
                 inGameCharacters.Sort(CompareCharactersBySpeed);
         }
 
@@ -51,7 +47,7 @@ namespace Script.SubSystems
             Push(CurrentCreature);
             CurrentCreature = Pop();
         }
-        
+
         private void Push(CreatureController creature)
         {
             inGameCharacters.Add(creature);
