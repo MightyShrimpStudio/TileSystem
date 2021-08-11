@@ -1,6 +1,4 @@
-﻿using System;
-using Script.Character;
-using Script.GameBoard.Tile;
+﻿using Script.GameBoard.Tile;
 using Script.ScriptableObjects;
 using UnityEngine;
 

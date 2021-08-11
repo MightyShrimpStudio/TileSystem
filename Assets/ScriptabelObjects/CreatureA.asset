@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aff3f3d838fab94cbf06174a7952d74, type: 3}
   m_Name: CreatureA
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 1
+  move: 1

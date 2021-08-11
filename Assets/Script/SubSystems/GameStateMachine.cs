@@ -18,7 +18,7 @@ namespace Script.SubSystems
         public GameStateMachine()
         {
             CurrentGameState = GameState.GameStart;
-            Debug.Log("Game state is " + CurrentGameState.ToString());
+            Debug.Log("Game state is " + CurrentGameState);
             NewPhase = true;
         }
 
@@ -50,7 +50,7 @@ namespace Script.SubSystems
                     throw new ArgumentOutOfRangeException();
             }
 
-            Debug.Log("Game state is " + CurrentGameState.ToString());
+            Debug.Log("Game state is " + CurrentGameState);
             NewPhase = true;
         }
     }

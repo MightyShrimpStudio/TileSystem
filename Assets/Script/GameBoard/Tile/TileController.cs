@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Script.Entity.Character;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,7 +9,7 @@ namespace Script.GameBoard.Tile
     [RequireComponent(typeof(TileRenderer), typeof(Collider))]
     public class TileController : MonoBehaviour
     {
-        public List<TileController> neighbours = new List<TileController>();
+        public List<TileController> neighbours = new ();
 
         [FormerlySerializedAs("currentCharacter")]
         public CreatureController currentCreatureController;
@@ -45,10 +46,7 @@ namespace Script.GameBoard.Tile
         {
             if (move != 0)
             {
-                foreach (var neighbour in neighbours)
-                {
-                    tiles = neighbour.RecursiveNeighbourSearch(move - 1, tiles);
-                }
+                tiles = neighbours.Aggregate(tiles, (current, neighbour) => neighbour.RecursiveNeighbourSearch(move - 1, current));
             }
 
             tiles.Add(this);

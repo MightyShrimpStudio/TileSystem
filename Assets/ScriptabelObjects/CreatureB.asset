@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: CreatureB
   m_EditorClassIdentifier: 
   speed: 0
+  move: 2

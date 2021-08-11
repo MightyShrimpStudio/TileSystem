@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Script.GameBoard.Tile;
 using UnityEngine;
-using UnityEngine.WSA;
 
 namespace Script.GameBoard
 {
@@ -10,15 +9,15 @@ namespace Script.GameBoard
     {
         public TileController tilePrefab;
         public float offset = 0.1f;
-        public Vector2 size = new Vector2(4, 4);
+        public Vector2 size = new (4, 4);
 
-        public readonly List<List<TileController>> _tileMatrix = new List<List<TileController>>();
+        public readonly List<List<TileController>> TileMatrix = new ();
 
         public void Populate(IsSelectedDelegate selectionMethod)
         {
             for (var i = 0; i < size.x; i++)
             {
-                _tileMatrix.Add(new List<TileController>());
+                TileMatrix.Add(new List<TileController>());
                 for (var j = 0; j < size.y; j++)
                 {
                     var tile = Instantiate(tilePrefab, Vector3.zero, Quaternion.identity);
@@ -27,7 +26,7 @@ namespace Script.GameBoard
                         transform.position.y,
                         j * tile.MyTileRender.size.z + j * offset);
                     tile.transform.position = position;
-                    _tileMatrix[i].Add(tile);
+                    TileMatrix[i].Add(tile);
                     tile.name = "Tile " + i + " " + j;
                     tile.OnSelect += selectionMethod;
                 }
@@ -41,10 +40,10 @@ namespace Script.GameBoard
             {
                 for (int j = 0; j < size.y; j++)
                 {
-                    _tileMatrix[i][j].neighbours.Add(_tileMatrix[(int) ((i+1)%size.x)][(int) ((j)%size.y)]);
-                    _tileMatrix[i][j].neighbours.Add(_tileMatrix[(int) (Math.Abs(i-1)%size.x)][(int) ((j)%size.y)]);
-                    _tileMatrix[i][j].neighbours.Add(_tileMatrix[(int) ((i)%size.x)][(int) (Math.Abs(j-1)%size.y)]);
-                    _tileMatrix[i][j].neighbours.Add(_tileMatrix[(int) ((i)%size.x)][(int) ((j+1)%size.y)]);
+                    TileMatrix[i][j].neighbours.Add(TileMatrix[(int) ((i+1)%size.x)][(int) ((j)%size.y)]);
+                    TileMatrix[i][j].neighbours.Add(TileMatrix[(int) (Math.Abs(i-1)%size.x)][(int) ((j)%size.y)]);
+                    TileMatrix[i][j].neighbours.Add(TileMatrix[(int) ((i)%size.x)][(int) (Math.Abs(j-1)%size.y)]);
+                    TileMatrix[i][j].neighbours.Add(TileMatrix[(int) ((i)%size.x)][(int) ((j+1)%size.y)]);
                 }
             }
         }

@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 
-namespace Script.Character
+namespace Script.Entity.Character
 {
     [RequireComponent(typeof(Animator))]
     public class CreatureAnimator : MonoBehaviour
     {
         private const int SliceCount = 4;
+        private const float Step = 360f / SliceCount;
 
-        public static readonly string[] DirectionArray =
+        private static readonly string[] DirectionArray =
         {
             "DirUp", "DirLeft", "DirDown", "DirRight"
         };
@@ -31,13 +32,11 @@ namespace Script.Character
 
         private int DirectionToIndex(Vector2 direction)
         {
-            var nomrDir = direction.normalized;
-            var step = 360f / SliceCount;
-            var halfStep = step / 2;
-            var angle = Vector2.SignedAngle(Vector2.up, nomrDir);
+            var halfStep = Step / 2;
+            var angle = Vector2.SignedAngle(Vector2.up, direction.normalized);
             angle += halfStep;
             if (angle < 0) angle += 360;
-            var stepCount = angle / step;
+            var stepCount = angle / Step;
             return Mathf.FloorToInt(stepCount);
         }
     }

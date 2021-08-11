@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
+﻿using System.Collections.Generic;
 using Script.Entity.Character;
 using Script.GameBoard;
 using UnityEngine;
@@ -15,38 +13,37 @@ namespace Script.SubSystems
             private set;
         }
 
-        public List<CreatureController> InGameCharacters;
+        public List<CreatureController> inGameCharacters;
 
         public void StartCircle(BoardController bc)
         {
-            InGameCharacters[0].Move(bc._tileMatrix[0][0]);
-            InGameCharacters[1].Move(bc._tileMatrix[1][1]);
+            inGameCharacters[0].Move(bc.TileMatrix[0][0]);
+            inGameCharacters[1].Move(bc.TileMatrix[1][1]);
             CurrentCreature = Pop();
             CalculateOrder();
         }
         
         public void AddCreature(CreatureController creatureController)
         {
-            InGameCharacters.Add(creatureController);
+            inGameCharacters.Add(creatureController);
             CalculateOrder();
         }
         
         public void RemoveCreature(CreatureController creatureController)
         {
-            InGameCharacters.Remove(creatureController);
+            inGameCharacters.Remove(creatureController);
             CalculateOrder();
         }
 
-        public void CalculateOrder()
+        private void CalculateOrder()
         {
-            InGameCharacters.Sort(CompareCharactersBySpeed);
+            if(inGameCharacters.Count > 1)
+                inGameCharacters.Sort(CompareCharactersBySpeed);
         }
 
         private static int CompareCharactersBySpeed(CreatureController chrX, CreatureController chrY)
         {
-            if (chrX == null)
-                return chrY == null ? 0 : -1;
-            return chrY == null ? 1 : chrX.creatureStats.speed.CompareTo(chrY.creatureStats.speed);
+            return chrX.creatureStats.speed.CompareTo(chrY.creatureStats.speed);
         }
 
         public void NextCharacter()
@@ -57,13 +54,13 @@ namespace Script.SubSystems
         
         private void Push(CreatureController creature)
         {
-            InGameCharacters.Add(creature);
+            inGameCharacters.Add(creature);
         }
 
         private CreatureController Pop()
         {
-            var tmpChr = InGameCharacters[0];
-            InGameCharacters.Remove(tmpChr);
+            var tmpChr = inGameCharacters[0];
+            inGameCharacters.Remove(tmpChr);
             return tmpChr;
         }
     }

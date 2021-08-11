@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Script.Entity.Character;
 using Script.GameBoard;
 using Script.GameBoard.Tile;
@@ -27,34 +26,32 @@ namespace Script
 
         private void Update()
         {
-            if (_gameStateMachine.NewPhase)
+            if (!_gameStateMachine.NewPhase) return;
+            _gameStateMachine.NewPhase = false;
+            switch (_gameStateMachine.CurrentGameState)
             {
-                _gameStateMachine.NewPhase = false;
-                switch (_gameStateMachine.CurrentGameState)
-                {
-                    case GameStateMachine.GameState.GameStart:
-                        SetUpGame();
-                        _gameStateMachine.NextPhase();
-                        break;
-                    case GameStateMachine.GameState.PRETurnPhase:
-                        _characterOrder.NextCharacter();
-                        _gameStateMachine.NextPhase();
-                        break;
-                    case GameStateMachine.GameState.StartTurnPhase:
-                        OnStartTurn();
-                        _gameStateMachine.NextPhase();
-                        break;
-                    case GameStateMachine.GameState.ActionPhase:
-                        break;
-                    case GameStateMachine.GameState.EndTurnPhase:
-                        OnEndTurn();
-                        _gameStateMachine.NextPhase();
-                        break;
-                    case GameStateMachine.GameState.ExitGame:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                case GameStateMachine.GameState.GameStart:
+                    SetUpGame();
+                    _gameStateMachine.NextPhase();
+                    break;
+                case GameStateMachine.GameState.PRETurnPhase:
+                    _characterOrder.NextCharacter();
+                    _gameStateMachine.NextPhase();
+                    break;
+                case GameStateMachine.GameState.StartTurnPhase:
+                    OnStartTurn();
+                    _gameStateMachine.NextPhase();
+                    break;
+                case GameStateMachine.GameState.ActionPhase:
+                    break;
+                case GameStateMachine.GameState.EndTurnPhase:
+                    OnEndTurn();
+                    _gameStateMachine.NextPhase();
+                    break;
+                case GameStateMachine.GameState.ExitGame:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -81,7 +78,7 @@ namespace Script
             EndTurn?.Invoke();
         }
 
-        public void OnSelection(TileController tile)
+        private void OnSelection(TileController tile)
         {
             _characterOrder.CurrentCreature.Move(tile);
             _gameStateMachine.NextPhase();
