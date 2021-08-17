@@ -9,9 +9,10 @@ namespace Script.GameBoard
     {
         public TileController tilePrefab;
         public float offset = 0.1f;
-        public Vector2 size = new(4, 4);
+        public Vector2 size = new Vector2(4, 4);
 
-        public readonly List<List<TileController>> TileMatrix = new();
+        public readonly List<List<TileController>> TileMatrix = new List<List<TileController>>();
+        public List<List<Vector2>> SpawnAreas = new List<List<Vector2>>();
 
         public void Populate(IsSelectedDelegate selectionMethod)
         {
@@ -35,6 +36,23 @@ namespace Script.GameBoard
             CalculateNeighbours();
         }
 
+        public List<TileController> GETSpawnArea(int teamNumber)
+        {
+            List<TileController> tmpTileList = new List<TileController>();
+
+            List<Vector2> spawnZone = SpawnAreas[teamNumber];
+
+            for (int i = (int) spawnZone[0].x; i <= spawnZone[1].x; i++)
+            {
+                for (int j = (int) spawnZone[0].y; j <= spawnZone[1].y; j++)
+                {
+                    tmpTileList.Add(TileMatrix[i][j]);
+                }
+            }
+            
+            return tmpTileList;
+        }
+        
         private void CalculateNeighbours()
         {
             for (var i = 0; i < size.x; i++)

@@ -9,7 +9,7 @@ namespace Script.GameBoard.Tile
     [RequireComponent(typeof(TileRenderer), typeof(Collider))]
     public class TileController : MonoBehaviour
     {
-        public List<TileController> neighbours = new();
+        public List<TileController> neighbours = new List<TileController>();
 
         [FormerlySerializedAs("currentCharacter")]
         public CreatureController currentCreatureController;
