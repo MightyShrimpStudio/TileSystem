@@ -7,7 +7,7 @@ namespace Script.Entity.Character
     [RequireComponent(typeof(CreatureRenderer))]
     public class CreatureController : MonoBehaviour
     {
-        public CreatureStats creatureStats;
+        public CreatureStats CreatureStats { get; set; }
 
         private CreatureRenderer _creatureRenderer;
         public bool isSpawned = false;
@@ -20,10 +20,13 @@ namespace Script.Entity.Character
 
         public void Move(TileController destinationTile)
         {
-            if(!isSpawned)CurrentTile.RemoveCharacter();
+            if(isSpawned)CurrentTile.RemoveCharacter();
             destinationTile.AddCharacter(this);
             CurrentTile = destinationTile;
-            transform.position = CurrentTile.transform.position;
+            Vector3 position = new Vector3(CurrentTile.transform.position.x,
+                CurrentTile.transform.position.y + 1,
+                CurrentTile.transform.position.z);
+            transform.position = position;
         }
     }
 }

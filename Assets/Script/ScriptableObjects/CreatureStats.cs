@@ -2,7 +2,7 @@
 
 namespace Script.ScriptableObjects
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/CreatureStats", order = 1)]
+    [CreateAssetMenu(menuName = "ScriptableObjects/CreatureStats")]
     public class CreatureStats : ScriptableObject
     {
         public int speed;

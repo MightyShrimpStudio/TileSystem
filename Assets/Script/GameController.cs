@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Script
 {
-    [RequireComponent(typeof(CreatureManager))]
+    [RequireComponent(typeof(CreatureManager), typeof(Spawner))]
     public class GameController : MonoBehaviour
     {
         public BoardController boardControllerPrefab;
@@ -23,6 +23,7 @@ namespace Script
             _creatureManager = GetComponent<CreatureManager>();
             _gameStateMachine = new GameStateMachine();
             _pathFinder = new PathFinder();
+            _spawner = GetComponent<Spawner>();
         }
 
         private void Update()
@@ -36,10 +37,7 @@ namespace Script
                     _gameStateMachine.NextPhase();
                     break;
                 case GameStateMachine.GameState.SpawnPhase:
-                    for (int i = 0; i < _creatureManager.NumberOfTeams; i++)
-                    {
-                        _spawner.SpawnCreatures(_creatureManager.GETCreaturesInTeam(i),_boardController.GETSpawnAreaByTeam(i));
-                    }
+                    SpawnCreaturesInGame();
                     _gameStateMachine.NextPhase();
                     break;
                 case GameStateMachine.GameState.PRETurnPhase:
@@ -63,6 +61,18 @@ namespace Script
             }
         }
 
+        private void SpawnCreaturesInGame()
+        {
+            for (int i = 0; i < _creatureManager.numberOfTeams; i++)
+            {
+                Debug.Log(i + " team is ready to spawn");
+                var creaturesInTeam = _creatureManager.GETCreaturesInTeam(i);
+                var spawnAreaByTeam = _boardController.GETSpawnAreaByTeam(i);
+                _spawner.SpawnCreatures(creaturesInTeam,spawnAreaByTeam);
+            }
+            _creatureManager.StartCircle(_boardController);
+        }
+
         public event StartTurnDelegate StartTurn;
         public event EndTurnDelegate EndTurn;
 
@@ -70,7 +80,6 @@ namespace Script
         {
             _boardController = Instantiate(boardControllerPrefab, transform.position, Quaternion.identity);
             _boardController.Populate(OnSelection);
-            _creatureManager.StartCircle(_boardController);
             StartTurn += _pathFinder.Allow;
             EndTurn += _pathFinder.Cleanup;
             Debug.Log("Set up game done");

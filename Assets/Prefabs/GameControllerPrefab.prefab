@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1954690268616431140}
   - component: {fileID: 605118179595721147}
   - component: {fileID: 1753409118202582921}
+  - component: {fileID: 1453814867023550522}
   m_Layer: 0
   m_Name: GameControllerPrefab
   m_TagString: Untagged
@@ -45,7 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardControllerPrefab: {fileID: 6805405211282918751, guid: 03e0a84c911b3e5439a5addb7ae11ad5, type: 3}
-  characters: []
 --- !u!114 &1753409118202582921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,4 +58,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c518467ce14a05a4eaf5c88e1081a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentCreature: {fileID: 0}
+  creaturePrefab: {fileID: 0}
+  inGameCreaturesStats: []
+  numberOfTeams: 0
+--- !u!114 &1453814867023550522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677384370056283514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb02eb7ac344e50b11dbc3a6661b446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

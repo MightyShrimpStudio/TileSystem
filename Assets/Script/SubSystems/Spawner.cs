@@ -16,6 +16,7 @@ namespace Script.SubSystems
                     if (tile.IsFree())
                     {
                         SpawnCreature(creature,tile);
+                        break;
                     }
                 }
             }
@@ -25,6 +26,7 @@ namespace Script.SubSystems
         {
             creature.Move(tile);
             creature.isSpawned = true;
+            Debug.Log(creature.name + " is spawned");
         }
     }
 }

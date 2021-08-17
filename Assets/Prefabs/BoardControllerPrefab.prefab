@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1503847621559448762}
-  - component: {fileID: 6805405211282918751}
+  - component: {fileID: 7538439094000466417}
   m_Layer: 0
   m_Name: BoardControllerPrefab
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6805405211282918751
+--- !u!114 &7538439094000466417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 7831041238963230877, guid: d9416e3a3e06d4247aaba98281758c79, type: 3}
-  offset: 2
+  offset: 0.1
+  gameBoardStats: {fileID: 11400000, guid: fe74e0234169a5a4ea6ed999500f083f, type: 2}

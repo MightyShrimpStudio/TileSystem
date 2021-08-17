@@ -11,7 +11,7 @@ namespace Script.SubSystems
         public void Allow(CreatureController creatureController)
         {
             var starterTile = creatureController.CurrentTile;
-            var move = creatureController.creatureStats.move;
+            var move = creatureController.CreatureStats.move;
             _tiles = starterTile.RecursiveNeighbourSearch(move, new HashSet<TileController>());
             foreach (var tile in _tiles) tile.isSelectable = true;
         }
