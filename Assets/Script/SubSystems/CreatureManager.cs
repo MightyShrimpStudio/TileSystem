@@ -5,36 +5,39 @@ using UnityEngine;
 
 namespace Script.SubSystems
 {
-    public class CharacterOrder : MonoBehaviour
+    public class CreatureManager : MonoBehaviour
     {
-        public List<CreatureController> inGameCharacters;
+        public List<CreatureController> inGameCreatures;
 
         public CreatureController CurrentCreature { get; private set; }
+        public int NumberOfTeams { get; set; }
 
         public void StartCircle(BoardController bc)
         {
-            inGameCharacters[0].Move(bc.TileMatrix[0][0]);
-            inGameCharacters[1].Move(bc.TileMatrix[1][1]);
+            foreach (var creature in inGameCreatures)
+            {
+                Instantiate(creature);
+            }
             CurrentCreature = Pop();
             CalculateOrder();
         }
 
         public void AddCreature(CreatureController creatureController)
         {
-            inGameCharacters.Add(creatureController);
+            inGameCreatures.Add(creatureController);
             CalculateOrder();
         }
 
         public void RemoveCreature(CreatureController creatureController)
         {
-            inGameCharacters.Remove(creatureController);
+            inGameCreatures.Remove(creatureController);
             CalculateOrder();
         }
 
         private void CalculateOrder()
         {
-            if (inGameCharacters.Count > 1)
-                inGameCharacters.Sort(CompareCharactersBySpeed);
+            if (inGameCreatures.Count > 1)
+                inGameCreatures.Sort(CompareCharactersBySpeed);
         }
 
         private static int CompareCharactersBySpeed(CreatureController chrX, CreatureController chrY)
@@ -50,14 +53,27 @@ namespace Script.SubSystems
 
         private void Push(CreatureController creature)
         {
-            inGameCharacters.Add(creature);
+            inGameCreatures.Add(creature);
         }
 
         private CreatureController Pop()
         {
-            var tmpChr = inGameCharacters[0];
-            inGameCharacters.Remove(tmpChr);
+            var tmpChr = inGameCreatures[0];
+            inGameCreatures.Remove(tmpChr);
             return tmpChr;
+        }
+
+        public List<CreatureController> GETCreaturesInTeam(int teamNumber)
+        {
+            List<CreatureController> creaturesInTeam = new List<CreatureController>();
+            foreach (var creature in inGameCreatures)
+            {
+                if (creature.creatureStats.team == teamNumber)
+                {
+                    creaturesInTeam.Add(creature);
+                }
+            }
+            return creaturesInTeam;
         }
     }
 }

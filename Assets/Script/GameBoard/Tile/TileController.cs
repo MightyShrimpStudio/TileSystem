@@ -49,6 +49,11 @@ namespace Script.GameBoard.Tile
             tiles.Add(this);
             return tiles;
         }
+
+        public bool IsFree()
+        {
+            return currentCreatureController == null;
+        }
     }
 
     public delegate void IsSelectedDelegate(TileController selectedTile);

@@ -10,6 +10,7 @@ namespace Script.Entity.Character
         public CreatureStats creatureStats;
 
         private CreatureRenderer _creatureRenderer;
+        public bool isSpawned = false;
         public TileController CurrentTile { get; private set; }
 
         private void Awake()
@@ -19,7 +20,7 @@ namespace Script.Entity.Character
 
         public void Move(TileController destinationTile)
         {
-            if (CurrentTile != null) CurrentTile.RemoveCharacter();
+            if(!isSpawned)CurrentTile.RemoveCharacter();
             destinationTile.AddCharacter(this);
             CurrentTile = destinationTile;
             transform.position = CurrentTile.transform.position;

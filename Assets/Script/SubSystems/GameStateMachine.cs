@@ -8,6 +8,7 @@ namespace Script.SubSystems
         public enum GameState
         {
             GameStart,
+            SpawnPhase,
             PRETurnPhase,
             StartTurnPhase,
             ActionPhase,
@@ -30,6 +31,9 @@ namespace Script.SubSystems
             switch (CurrentGameState)
             {
                 case GameState.GameStart:
+                    CurrentGameState = GameState.SpawnPhase;
+                    break;
+                case GameState.SpawnPhase:
                     CurrentGameState = GameState.PRETurnPhase;
                     break;
                 case GameState.PRETurnPhase:

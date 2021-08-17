@@ -36,9 +36,9 @@ namespace Script.GameBoard
             CalculateNeighbours();
         }
 
-        public List<TileController> GETSpawnArea(int teamNumber)
+        public List<TileController> GETSpawnAreaByTeam(int teamNumber)
         {
-            List<TileController> tmpTileList = new List<TileController>();
+            List<TileController> spawnAreaByTeam = new List<TileController>();
 
             List<Vector2> spawnZone = SpawnAreas[teamNumber];
 
@@ -46,11 +46,11 @@ namespace Script.GameBoard
             {
                 for (int j = (int) spawnZone[0].y; j <= spawnZone[1].y; j++)
                 {
-                    tmpTileList.Add(TileMatrix[i][j]);
+                    spawnAreaByTeam.Add(TileMatrix[i][j]);
                 }
             }
             
-            return tmpTileList;
+            return spawnAreaByTeam;
         }
         
         private void CalculateNeighbours()

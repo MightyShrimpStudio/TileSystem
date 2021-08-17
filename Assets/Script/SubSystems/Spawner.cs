@@ -9,12 +9,22 @@ namespace Script.SubSystems
     {
         public void SpawnCreatures(List<CreatureController> creatureList, List<TileController> tileList)
         {
+            foreach (var creature in creatureList)
+            {
+                foreach (var tile in tileList)
+                {
+                    if (tile.IsFree())
+                    {
+                        SpawnCreature(creature,tile);
+                    }
+                }
+            }
         }
 
         public void SpawnCreature(CreatureController creature, TileController tile)
         {
-            Instantiate(creature);
             creature.Move(tile);
+            creature.isSpawned = true;
         }
     }
 }

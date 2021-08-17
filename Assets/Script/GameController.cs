@@ -7,19 +7,20 @@ using UnityEngine;
 
 namespace Script
 {
-    [RequireComponent(typeof(CharacterOrder))]
+    [RequireComponent(typeof(CreatureManager))]
     public class GameController : MonoBehaviour
     {
         public BoardController boardControllerPrefab;
         private BoardController _boardController;
 
-        private CharacterOrder _characterOrder;
+        private CreatureManager _creatureManager;
         private GameStateMachine _gameStateMachine;
         private PathFinder _pathFinder;
+        private Spawner _spawner;
 
         private void Awake()
         {
-            _characterOrder = GetComponent<CharacterOrder>();
+            _creatureManager = GetComponent<CreatureManager>();
             _gameStateMachine = new GameStateMachine();
             _pathFinder = new PathFinder();
         }
@@ -34,8 +35,15 @@ namespace Script
                     SetUpGame();
                     _gameStateMachine.NextPhase();
                     break;
+                case GameStateMachine.GameState.SpawnPhase:
+                    for (int i = 0; i < _creatureManager.NumberOfTeams; i++)
+                    {
+                        _spawner.SpawnCreatures(_creatureManager.GETCreaturesInTeam(i),_boardController.GETSpawnAreaByTeam(i));
+                    }
+                    _gameStateMachine.NextPhase();
+                    break;
                 case GameStateMachine.GameState.PRETurnPhase:
-                    _characterOrder.NextCharacter();
+                    _creatureManager.NextCharacter();
                     _gameStateMachine.NextPhase();
                     break;
                 case GameStateMachine.GameState.StartTurnPhase:
@@ -62,7 +70,7 @@ namespace Script
         {
             _boardController = Instantiate(boardControllerPrefab, transform.position, Quaternion.identity);
             _boardController.Populate(OnSelection);
-            _characterOrder.StartCircle(_boardController);
+            _creatureManager.StartCircle(_boardController);
             StartTurn += _pathFinder.Allow;
             EndTurn += _pathFinder.Cleanup;
             Debug.Log("Set up game done");
@@ -70,7 +78,7 @@ namespace Script
 
         private void OnStartTurn()
         {
-            StartTurn?.Invoke(_characterOrder.CurrentCreature);
+            StartTurn?.Invoke(_creatureManager.CurrentCreature);
         }
 
         private void OnEndTurn()
@@ -80,7 +88,7 @@ namespace Script
 
         private void OnSelection(TileController tile)
         {
-            _characterOrder.CurrentCreature.Move(tile);
+            _creatureManager.CurrentCreature.Move(tile);
             _gameStateMachine.NextPhase();
         }
     }

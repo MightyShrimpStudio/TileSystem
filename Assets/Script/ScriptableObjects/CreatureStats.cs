@@ -7,5 +7,6 @@ namespace Script.ScriptableObjects
     {
         public int speed;
         public int move;
+        public int team;
     }
 }
