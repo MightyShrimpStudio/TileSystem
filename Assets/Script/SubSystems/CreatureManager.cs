@@ -16,6 +16,8 @@ namespace Script.SubSystems
 
         public CreatureController CurrentCreature { get; private set; }
 
+        private bool _isCircleStart = false;
+
         public void Awake()
         {
             InGameCreatures = new List<CreatureController>();
@@ -28,11 +30,6 @@ namespace Script.SubSystems
             }
         }
 
-        public void StartCircle(BoardController bc)
-        {
-            CurrentCreature = Pop();
-            CalculateOrder();
-        }
 
         public void AddCreature(CreatureController creatureController)
         {
@@ -46,7 +43,7 @@ namespace Script.SubSystems
             CalculateOrder();
         }
 
-        private void CalculateOrder()
+        public void CalculateOrder()
         {
             if (InGameCreatures.Count > 1)
                 InGameCreatures.Sort(CompareCharactersBySpeed);
@@ -59,10 +56,10 @@ namespace Script.SubSystems
 
         public void NextCharacter()
         {
-            Push(CurrentCreature);
+            if(_isCircleStart)Push(CurrentCreature);
             CurrentCreature = Pop();
+            _isCircleStart = true;
         }
-
         private void Push(CreatureController creature)
         {
             InGameCreatures.Add(creature);

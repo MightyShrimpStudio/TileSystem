@@ -71,7 +71,7 @@ namespace Script
                 _spawner.SpawnCreatures(creaturesInTeam, spawnAreaByTeam);
             }
 
-            _creatureManager.StartCircle(_boardController);
+            _creatureManager.CalculateOrder();
         }
 
         public event StartTurnDelegate StartTurn;
