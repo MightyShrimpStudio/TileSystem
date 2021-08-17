@@ -38,30 +38,32 @@ namespace Script.GameBoard
 
         public List<TileController> GETSpawnAreaByTeam(int teamNumber)
         {
-            List<TileController> spawnAreaByTeam = new List<TileController>();
+            var spawnAreaByTeam = new List<TileController>();
 
-            Vector4 spawnZone = gameBoardStats.SpawnAreas[teamNumber];
+            var spawnZone = gameBoardStats.SpawnAreas[teamNumber];
 
-            for (int i = (int) spawnZone.x; i <= spawnZone.z; i++)
-            {
-                for (int j = (int) spawnZone.y; j <= spawnZone.w; j++)
-                {
-                    spawnAreaByTeam.Add(TileMatrix[i][j]);
-                }
-            }
-            
+            for (var i = (int) spawnZone.x; i <= spawnZone.z; i++)
+            for (var j = (int) spawnZone.y; j <= spawnZone.w; j++)
+                spawnAreaByTeam.Add(TileMatrix[i][j]);
+
             return spawnAreaByTeam;
         }
-        
+
         private void CalculateNeighbours()
         {
             for (var i = 0; i < gameBoardStats.size.x; i++)
             for (var j = 0; j < gameBoardStats.size.y; j++)
             {
-                TileMatrix[i][j].neighbours.Add(TileMatrix[(int) ((i + 1) % gameBoardStats.size.x)][(int) (j % gameBoardStats.size.y)]);
-                TileMatrix[i][j].neighbours.Add(TileMatrix[(int) (Math.Abs(i - 1) % gameBoardStats.size.x)][(int) (j % gameBoardStats.size.y)]);
-                TileMatrix[i][j].neighbours.Add(TileMatrix[(int) (i % gameBoardStats.size.x)][(int) (Math.Abs(j - 1) % gameBoardStats.size.y)]);
-                TileMatrix[i][j].neighbours.Add(TileMatrix[(int) (i % gameBoardStats.size.x)][(int) ((j + 1) % gameBoardStats.size.y)]);
+                TileMatrix[i][j].neighbours
+                    .Add(TileMatrix[(int) ((i + 1) % gameBoardStats.size.x)][(int) (j % gameBoardStats.size.y)]);
+                TileMatrix[i][j].neighbours
+                    .Add(TileMatrix[(int) (Math.Abs(i - 1) % gameBoardStats.size.x)][
+                        (int) (j % gameBoardStats.size.y)]);
+                TileMatrix[i][j].neighbours
+                    .Add(TileMatrix[(int) (i % gameBoardStats.size.x)][
+                        (int) (Math.Abs(j - 1) % gameBoardStats.size.y)]);
+                TileMatrix[i][j].neighbours
+                    .Add(TileMatrix[(int) (i % gameBoardStats.size.x)][(int) ((j + 1) % gameBoardStats.size.y)]);
             }
         }
     }

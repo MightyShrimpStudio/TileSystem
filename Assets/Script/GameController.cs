@@ -63,13 +63,14 @@ namespace Script
 
         private void SpawnCreaturesInGame()
         {
-            for (int i = 0; i < _creatureManager.numberOfTeams; i++)
+            for (var i = 0; i < _creatureManager.numberOfTeams; i++)
             {
                 Debug.Log(i + " team is ready to spawn");
                 var creaturesInTeam = _creatureManager.GETCreaturesInTeam(i);
                 var spawnAreaByTeam = _boardController.GETSpawnAreaByTeam(i);
-                _spawner.SpawnCreatures(creaturesInTeam,spawnAreaByTeam);
+                _spawner.SpawnCreatures(creaturesInTeam, spawnAreaByTeam);
             }
+
             _creatureManager.StartCircle(_boardController);
         }
 

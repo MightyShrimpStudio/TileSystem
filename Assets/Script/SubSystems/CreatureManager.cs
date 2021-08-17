@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Script.Entity.Character;
 using Script.GameBoard;
 using Script.ScriptableObjects;
@@ -12,8 +11,8 @@ namespace Script.SubSystems
         public CreatureController creaturePrefab;
         public List<CreatureStats> inGameCreaturesStats;
         public int numberOfTeams;
-        
-        public List<CreatureController> InGameCreatures{ get; private set; }
+
+        public List<CreatureController> InGameCreatures { get; private set; }
 
         public CreatureController CurrentCreature { get; private set; }
 
@@ -22,7 +21,7 @@ namespace Script.SubSystems
             InGameCreatures = new List<CreatureController>();
             foreach (var creatureStat in inGameCreaturesStats)
             {
-                CreatureController creature = Instantiate(creaturePrefab);
+                var creature = Instantiate(creaturePrefab);
                 creature.CreatureStats = creatureStat;
                 creature.name = creatureStat.name;
                 InGameCreatures.Add(creature);
@@ -78,14 +77,10 @@ namespace Script.SubSystems
 
         public List<CreatureController> GETCreaturesInTeam(int teamNumber)
         {
-            List<CreatureController> creaturesInTeam = new List<CreatureController>();
+            var creaturesInTeam = new List<CreatureController>();
             foreach (var creature in InGameCreatures)
-            {
                 if (creature.CreatureStats.team == teamNumber)
-                {
                     creaturesInTeam.Add(creature);
-                }
-            }
             return creaturesInTeam;
         }
     }
