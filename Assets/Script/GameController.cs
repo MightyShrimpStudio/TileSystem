@@ -1,5 +1,5 @@
 ﻿using System;
-using Script.Entity.Character;
+using Script.Entity.Creature;
 using Script.GameBoard;
 using Script.GameBoard.Tile;
 using Script.SubSystems;

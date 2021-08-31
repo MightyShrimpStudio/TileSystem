@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Script.ScriptableObjects
+namespace Script.GameBoard
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/GameBoardStats")]
     public class GameBoardStats : ScriptableObject

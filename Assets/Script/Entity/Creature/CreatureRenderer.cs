@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Script.Entity.Character
+namespace Script.Entity.Creature
 {
     [RequireComponent(typeof(CreatureAnimator))]
     public class CreatureRenderer : MonoBehaviour

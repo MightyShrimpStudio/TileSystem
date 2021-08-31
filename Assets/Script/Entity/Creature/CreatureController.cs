@@ -1,8 +1,7 @@
 ﻿using Script.GameBoard.Tile;
-using Script.ScriptableObjects;
 using UnityEngine;
 
-namespace Script.Entity.Character
+namespace Script.Entity.Creature
 {
     [RequireComponent(typeof(CreatureRenderer))]
     public class CreatureController : MonoBehaviour

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Script.GameBoard.Tile;
-using Script.ScriptableObjects;
 using UnityEngine;
 
 namespace Script.GameBoard

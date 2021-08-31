@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Script.Entity.Character;
+using Script.Entity.Creature;
 using Script.GameBoard;
-using Script.ScriptableObjects;
 using UnityEngine;
 
 namespace Script.SubSystems

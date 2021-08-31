@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Script.Entity.Character;
+using Script.Entity.Creature;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Serialization;
