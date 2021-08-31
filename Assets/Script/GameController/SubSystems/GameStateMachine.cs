@@ -16,15 +16,16 @@ namespace Script.GameController.SubSystems
             ExitGame
         }
 
+        public bool NewPhase { get; set; }
+
+        public GameState CurrentGameState { get; private set; }
+
         public GameStateMachine()
         {
             CurrentGameState = GameState.GameStart;
             Debug.Log("Game state is " + CurrentGameState);
             NewPhase = true;
         }
-
-        public GameState CurrentGameState { get; private set; } = GameState.PRETurnPhase;
-        public bool NewPhase { get; set; }
 
         public void NextPhase()
         {

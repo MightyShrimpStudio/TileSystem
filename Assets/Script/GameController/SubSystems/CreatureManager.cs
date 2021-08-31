@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Script.Entity.Creature;
 using UnityEngine;
 
@@ -9,71 +10,70 @@ namespace Script.GameController.SubSystems
         public CreatureController creaturePrefab;
         public List<CreatureStats> inGameCreaturesStats;
         public int numberOfTeams;
-
-        public List<CreatureController> InGameCreatures { get; private set; }
-
+        
         public CreatureController CurrentCreature { get; private set; }
 
-        private bool _isCircleStart = false;
+        private List<CreatureController> _inGameCreatures;
+        private bool _isCircleStart;
 
-        public void Awake()
+        private void Awake()
         {
-            InGameCreatures = new List<CreatureController>();
+            _inGameCreatures = new List<CreatureController>();
             foreach (var creatureStat in inGameCreaturesStats)
             {
                 var creature = Instantiate(creaturePrefab);
                 creature.CreatureStats = creatureStat;
                 creature.name = creatureStat.name;
-                InGameCreatures.Add(creature);
+                _inGameCreatures.Add(creature);
             }
         }
 
+        private int CompareCharactersBySpeed(CreatureController chrX, CreatureController chrY)
+        {
+            return chrX.CreatureStats.speed.CompareTo(chrY.CreatureStats.speed);
+        }
+
+        private void Push(CreatureController creature)
+        {
+            _inGameCreatures.Add(creature);
+        }
+
+        private CreatureController Pop()
+        {
+            var tmpChr = _inGameCreatures[0];
+            _inGameCreatures.Remove(tmpChr);
+            return tmpChr;
+        }
 
         public void AddCreature(CreatureController creatureController)
         {
-            InGameCreatures.Add(creatureController);
+            _inGameCreatures.Add(creatureController);
             CalculateOrder();
         }
 
         public void RemoveCreature(CreatureController creatureController)
         {
-            InGameCreatures.Remove(creatureController);
+            _inGameCreatures.Remove(creatureController);
             CalculateOrder();
         }
 
         public void CalculateOrder()
         {
-            if (InGameCreatures.Count > 1)
-                InGameCreatures.Sort(CompareCharactersBySpeed);
+            if (_inGameCreatures.Count > 1)
+                _inGameCreatures.Sort(CompareCharactersBySpeed);
         }
 
-        private static int CompareCharactersBySpeed(CreatureController chrX, CreatureController chrY)
-        {
-            return chrX.CreatureStats.speed.CompareTo(chrY.CreatureStats.speed);
-        }
-
-        public void NextCharacter()
+        public void NextCreature()
         {
             if(_isCircleStart)Push(CurrentCreature);
             CurrentCreature = Pop();
             _isCircleStart = true;
         }
-        private void Push(CreatureController creature)
-        {
-            InGameCreatures.Add(creature);
-        }
-
-        private CreatureController Pop()
-        {
-            var tmpChr = InGameCreatures[0];
-            InGameCreatures.Remove(tmpChr);
-            return tmpChr;
-        }
 
         public List<CreatureController> GETCreaturesInTeam(int teamNumber)
         {
             var creaturesInTeam = new List<CreatureController>();
-            foreach (var creature in InGameCreatures)
+            foreach (var creature in _inGameCreatures)
                 if (creature.CreatureStats.team == teamNumber)
                     creaturesInTeam.Add(creature);
             return creaturesInTeam;

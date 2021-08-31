@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Script.GameController.SubSystems
 {
-    public class Spawner : MonoBehaviour
+    public class Spawner
     {
         public void SpawnCreatures(List<CreatureController> creatureList, List<TileController> tileList)
         {

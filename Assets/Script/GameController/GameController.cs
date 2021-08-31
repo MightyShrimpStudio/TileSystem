@@ -7,23 +7,27 @@ using UnityEngine;
 
 namespace Script.GameController
 {
-    [RequireComponent(typeof(CreatureManager), typeof(Spawner))]
+    [RequireComponent(
+        typeof(CreatureManager))]
     public class GameController : MonoBehaviour
     {
         public BoardController boardControllerPrefab;
+        
         private BoardController _boardController;
-
         private CreatureManager _creatureManager;
         private GameStateMachine _gameStateMachine;
         private PathFinder _pathFinder;
         private Spawner _spawner;
+        
+        public event StartTurnDelegate StartTurn;
+        public event EndTurnDelegate EndTurn;
 
         private void Awake()
         {
             _creatureManager = GetComponent<CreatureManager>();
             _gameStateMachine = new GameStateMachine();
             _pathFinder = new PathFinder();
-            _spawner = GetComponent<Spawner>();
+            _spawner = new Spawner();
         }
 
         private void Update()
@@ -41,7 +45,7 @@ namespace Script.GameController
                     _gameStateMachine.NextPhase();
                     break;
                 case GameStateMachine.GameState.PRETurnPhase:
-                    _creatureManager.NextCharacter();
+                    _creatureManager.NextCreature();
                     _gameStateMachine.NextPhase();
                     break;
                 case GameStateMachine.GameState.StartTurnPhase:
@@ -74,9 +78,6 @@ namespace Script.GameController
             _creatureManager.CalculateOrder();
         }
 
-        public event StartTurnDelegate StartTurn;
-        public event EndTurnDelegate EndTurn;
-
         private void SetUpGame()
         {
             _boardController = Instantiate(boardControllerPrefab, transform.position, Quaternion.identity);
@@ -85,25 +86,19 @@ namespace Script.GameController
             EndTurn += _pathFinder.Cleanup;
             Debug.Log("Set up game done");
         }
-
-        private void OnStartTurn()
-        {
-            StartTurn?.Invoke(_creatureManager.CurrentCreature);
-        }
-
-        private void OnEndTurn()
-        {
-            EndTurn?.Invoke();
-        }
-
+        
         private void OnSelection(TileController tile)
         {
             _creatureManager.CurrentCreature.Move(tile);
             _gameStateMachine.NextPhase();
         }
+
+        private void OnStartTurn() => StartTurn?.Invoke(_creatureManager.CurrentCreature);
+
+        private void OnEndTurn() => EndTurn?.Invoke();
     }
 
-    public delegate void StartTurnDelegate(CreatureController currentCharacter);
+    public delegate void StartTurnDelegate(CreatureController currentCreature);
 
     public delegate void EndTurnDelegate();
 }
