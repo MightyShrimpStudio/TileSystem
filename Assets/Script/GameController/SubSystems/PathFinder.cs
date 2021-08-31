@@ -2,7 +2,7 @@
 using Script.Entity.Creature;
 using Script.GameBoard.Tile;
 
-namespace Script.SubSystems
+namespace Script.GameController.SubSystems
 {
     public class PathFinder
     {

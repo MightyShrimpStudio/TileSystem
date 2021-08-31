@@ -2,10 +2,10 @@
 using Script.Entity.Creature;
 using Script.GameBoard;
 using Script.GameBoard.Tile;
-using Script.SubSystems;
+using Script.GameController.SubSystems;
 using UnityEngine;
 
-namespace Script
+namespace Script.GameController
 {
     [RequireComponent(typeof(CreatureManager), typeof(Spawner))]
     public class GameController : MonoBehaviour

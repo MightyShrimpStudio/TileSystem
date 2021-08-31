@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Script.Entity.Creature;
-using Script.GameBoard;
 using UnityEngine;
 
-namespace Script.SubSystems
+namespace Script.GameController.SubSystems
 {
     public class CreatureManager : MonoBehaviour
     {

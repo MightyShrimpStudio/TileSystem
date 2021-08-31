@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Script.SubSystems
+namespace Script.GameController.SubSystems
 {
     public class GameStateMachine
     {

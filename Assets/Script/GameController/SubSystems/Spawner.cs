@@ -3,7 +3,7 @@ using Script.Entity.Creature;
 using Script.GameBoard.Tile;
 using UnityEngine;
 
-namespace Script.SubSystems
+namespace Script.GameController.SubSystems
 {
     public class Spawner : MonoBehaviour
     {
