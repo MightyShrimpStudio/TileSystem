@@ -10,8 +10,7 @@ namespace Script.GameBoard.Tile
     public class TileController : MonoBehaviour
     {
         public List<TileController> neighbours = new List<TileController>();
-
-        [FormerlySerializedAs("currentCharacter")]
+        
         public CreatureController currentCreatureController;
 
         public bool isSelectable = true;

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4177251129735576663}
   - component: {fileID: 1609769597475209669}
   - component: {fileID: 7831041238963230877}
+  - component: {fileID: 6815729750425702516}
   - component: {fileID: 4207069584299807997}
   - component: {fileID: 2901371510401654215}
-  - component: {fileID: 6815729750425702516}
   m_Layer: 0
   m_Name: TilePrefab
   m_TagString: Untagged
@@ -61,8 +61,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   neighbours: []
-  currentCharacter: {fileID: 0}
-  currentEntityController: {fileID: 0}
+  currentCreatureController: {fileID: 0}
+  isSelectable: 1
+--- !u!114 &6815729750425702516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8159211238737262274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97944845b17048d29a66db97c03f52e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 1, y: 1, z: 1}
 --- !u!33 &4207069584299807997
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -90,7 +103,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 87c1de3a9f877b540b1eceb6beb78468, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,16 +125,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6815729750425702516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8159211238737262274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97944845b17048d29a66db97c03f52e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  size: {x: 1, y: 1, z: 1}
