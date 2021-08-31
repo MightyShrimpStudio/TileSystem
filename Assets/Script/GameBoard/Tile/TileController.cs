@@ -2,6 +2,7 @@
 using System.Linq;
 using Script.Entity.Character;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 
 namespace Script.GameBoard.Tile
@@ -13,10 +14,20 @@ namespace Script.GameBoard.Tile
         
         public CreatureController currentCreatureController;
 
-        public bool isSelectable = true;
+        public bool IsSelectable
+        {
+            get => _isSelectable;
+            set
+            {
+                _isSelectable = value;
+                MyTileRender.SetSelectable(value);
+            }
+        }
 
         public TileRenderer MyTileRender { get; private set; }
 
+        private bool _isSelectable = false;
+        
         private void Awake()
         {
             MyTileRender = GetComponent<TileRenderer>();
@@ -24,7 +35,7 @@ namespace Script.GameBoard.Tile
 
         private void OnMouseDown()
         {
-            if (isSelectable) OnSelect?.Invoke(this);
+            if (IsSelectable) OnSelect?.Invoke(this);
         }
 
         public event IsSelectedDelegate OnSelect;

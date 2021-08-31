@@ -13,12 +13,12 @@ namespace Script.SubSystems
             var starterTile = creatureController.CurrentTile;
             var move = creatureController.CreatureStats.move;
             _tiles = starterTile.RecursiveNeighbourSearch(move, new HashSet<TileController>());
-            foreach (var tile in _tiles) tile.isSelectable = true;
+            foreach (var tile in _tiles) tile.IsSelectable = true;
         }
 
         public void Cleanup()
         {
-            foreach (var tile in _tiles) tile.isSelectable = false;
+            foreach (var tile in _tiles) tile.IsSelectable = false;
         }
     }
 }
